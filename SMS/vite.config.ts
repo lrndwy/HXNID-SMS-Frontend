@@ -6,14 +6,13 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 
 // https://vite.dev/config/
 export default defineConfig({
-    plugins: [vue(), vueDevTools()],
-    css: {
-        postcss: './postcss.config.cjs',
+  plugins: [
+    vue(),
+    vueDevTools(),
+  ],
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url))
     },
-    resolve: {
-        alias: {
-            '@': fileURLToPath(new URL('./src',
-                import.meta.url)),
-        },
-    },
+  },
 })
