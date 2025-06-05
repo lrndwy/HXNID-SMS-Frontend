@@ -1,0 +1,1 @@
+ikan sepat ikan tongkol
