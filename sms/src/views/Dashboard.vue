@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard">
     <h1>Dashboard</h1>
-    <button class="bg-blue-500 text-white p-2 rounded-md" @click="logout">Logout</button>
+    <button class="bg-red-500 text-white p-2 rounded-md" @click="logout">Logout</button>
   </div>
 </template>
 

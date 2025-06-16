@@ -31,8 +31,8 @@ const login = async () => {
 </script>
 
 <template>
-  <div class="flex items-center justify-center min-h-screen bg-gray-100">
-    <div class="w-full max-w-md p-8 bg-white rounded-lg shadow-md">
+  <div class="flex items-center justify-center min-h-screen min-w-screen bg-white">
+    <div class="w-[900px] p-12 bg-gray-50 rounded-lg shadow-lg border border-gray-200">
       <div class="mb-8 text-center">
         <h1 class="text-3xl font-bold text-gray-800">Login</h1>
         <p class="mt-2 text-gray-600">Sign in to your account</p>
