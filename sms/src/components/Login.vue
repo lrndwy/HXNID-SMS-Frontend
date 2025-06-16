@@ -4,39 +4,28 @@ import { ref } from 'vue'
 const email = ref('')
 const password = ref('')
 const rememberMe = ref(false)
-
+const loginUrl = `${import.meta.env.VITE_API_BASE_URL}/users/login/`
 const login = async () => {
-  // This function will be implemented by the user to connect to their API
-  // console.log('Login attempt with:', { username: username.value, password: password.value, rememberMe: rememberMe.value })
-  
-  // const accessToken = '655cc50bccbda29bef4adb382a9b343431ef2538'; // Ini access token yang didapat SETELAH login
-  const loginUrl = 'http://127.0.0.1:8000/api/users/login/'; // Endpoint login yang bener
-
   try {
     const response = await fetch(loginUrl, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        // 'Authorization': `Bearer ${accessToken}` // Header Authorization dipake SETELAH login, bukan saat login
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         email: email.value,
         password: password.value
       })
-    });
-
-    if (response.ok) {
-      const data = await response.json();
-      console.log('Login successful:', data);
-      // TODO: Handle successful login (e.g., save token from data, redirect)
-    } else {
-      const errorData = await response.json();
-      console.error('Login failed:', response.status, errorData);
-      // TODO: Handle login failure (e.g., show error message)
-    }
+    })
+    
+    if (!response.ok) throw new Error('Login failed')
+    
+    const data = await response.json()
+    localStorage.setItem('token', data.token)
+    window.location.href = '/dashboard'
+    // Handle successful login here
   } catch (error) {
-    console.error('Error during login fetch:', error);
-    // TODO: Handle network or other errors
+    console.error('Login error:', error)
   }
 }
 </script>
