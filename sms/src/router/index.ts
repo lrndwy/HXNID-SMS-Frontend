@@ -12,9 +12,9 @@ const routes: RouteRecordRaw[] = [
     redirect: '/login'
   },
   {
-    path: '/dashboard',
+    path: '/admin/dashboard',
     name: 'Dashboard',
-    component: () => import('../views/Dashboard.vue')
+    component: () => import('../views/admin/Dashboard.vue')
   }
 ]
 
