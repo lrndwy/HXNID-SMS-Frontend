@@ -31,9 +31,9 @@
             <span class="ml-auto"> <component :is="open.attendance ? ChevronUp : ChevronDown" :size="18" /> </span>
           </div>
           <div v-if="open.attendance" class="ml-8 mt-1 space-y-1">
-            <div class="flex items-center gap-2 text-xs cursor-pointer hover:text-green-600 font-normal capitalize"><User :size="20" />Teacher</div>
-            <div class="flex items-center gap-2 text-xs cursor-pointer hover:text-green-600 font-normal capitalize"><UserCog :size="20" />Staff</div>
-            <div class="flex items-center gap-2 text-xs cursor-pointer hover:text-green-600 font-normal capitalize"><GraduationCap :size="20" />Student</div>
+            <div class="flex items-center gap-2 text-sm cursor-pointer hover:text-green-600 font-normal capitalize"><User :size="20" />Teacher</div>
+            <div class="flex items-center gap-2 text-sm cursor-pointer hover:text-green-600 font-normal capitalize"><UserCog :size="20" />Staff</div>
+            <div class="flex items-center gap-2 text-sm cursor-pointer hover:text-green-600 font-normal capitalize"><GraduationCap :size="20" />Student</div>
           </div>
         </div>
         <!-- Examination -->
@@ -54,9 +54,9 @@
             <span class="ml-auto"> <component :is="open.users ? ChevronUp : ChevronDown" :size="18" /> </span>
           </div>
           <div v-if="open.users" class="ml-8 mt-1 space-y-1">
-            <div class="flex items-center gap-2 text-xs cursor-pointer hover:text-green-600 font-normal capitalize"><User :size="20" />Teacher</div>
-            <div class="flex items-center gap-2 text-xs cursor-pointer hover:text-green-600 font-normal capitalize"><UserCog :size="20" />Staff</div>
-            <div class="flex items-center gap-2 text-xs cursor-pointer hover:text-green-600 font-normal capitalize"><GraduationCap :size="20" />Student</div>
+            <div class="flex items-center gap-2 text-sm cursor-pointer hover:text-green-600 font-normal capitalize"><User :size="20" />Teacher</div>
+            <div class="flex items-center gap-2 text-sm cursor-pointer hover:text-green-600 font-normal capitalize"><UserCog :size="20" />Staff</div>
+            <div class="flex items-center gap-2 text-sm cursor-pointer hover:text-green-600 font-normal capitalize"><GraduationCap :size="20" />Student</div>
           </div>
         </div>
         <!-- Payment -->
