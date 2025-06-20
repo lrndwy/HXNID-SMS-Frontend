@@ -32,7 +32,9 @@ const login = async () => {
     if (!response.ok) throw new Error('Login failed')
     
     const data = await response.json()
+    console.log('LOGIN RESPONSE:', data)
     localStorage.setItem('token', data.token)
+    localStorage.setItem('user', JSON.stringify(data.user))
     window.location.href = '/admin/dashboard'
     // Handle successful login here
   } catch (error) {
@@ -44,6 +46,7 @@ const register = async () => {
   try {
     const response = await fetch(registerUrl, {
       method: 'POST',
+      
       headers: {
         'Content-Type': 'application/json'
       },

@@ -3,9 +3,9 @@
     <!-- Profile -->
     <div>
       <div class="flex flex-col items-center py-6">
-        <img src="../assets/image/orang.svg" alt="profile" class="w-16 h-16 rounded-full border-4 border-white shadow-md" />
+        <img src=".../assets/image/orang.svg" alt="profile" class="w-16 h-16 rounded-full border-4 border-white shadow-md" />
         <div class="mt-2 text-center">
-          <div class="font-bold text-gray-800 capitalize text-lg">Haniffthur</div>
+          <div class="font-bold text-gray-800 capitalize text-lg">{{ userName }}</div>
           <div class="text-xs text-gray-500 lowercase">ui/ux - designer</div>
         </div>
       </div>
@@ -69,7 +69,7 @@
     <!-- Logout Button -->
     <div class="px-4 pb-6">
       <hr class="mb-4" />
-      <button class="w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded transition font-semibold uppercase tracking-wider">Logout</button>
+      <button class="w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded transition font-semibold uppercase tracking-wider" @click="logout">Logout</button>
     </div>
   </aside>
 </template>
@@ -82,12 +82,16 @@ import { Home, Users, Book, CalendarCheck, Megaphone, CreditCard, User, UserCog,
 const router = useRouter()
 const open = ref({ attendance: true, users: true })
 
+const user = JSON.parse(localStorage.getItem('user') || '{}')
+const userName = ref(user.username || user.name || 'User')
+
 function toggle(key) {
   open.value[key] = !open.value[key]
 }
 
 const logout = () => {
   localStorage.removeItem('token')
+  localStorage.removeItem('user')
   router.push('/login')
 }
 </script>
