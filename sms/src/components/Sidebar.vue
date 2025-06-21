@@ -13,7 +13,7 @@
       <!-- Menu -->
       <nav class="px-2">
         <div class="text-xs text-gray-400 mb-2 uppercase font-bold tracking-wider">Home</div>
-        <a href="/admin/dashboard" class="flex items-center gap-2 px-3 py-2 mb-2 rounded-lg bg-gray-200 text-gray-800 font-semibold capitalize text-base">
+        <a href="#" class="flex items-center gap-2 px-3 py-2 mb-2 rounded-lg bg-gray-200 text-gray-800 font-semibold capitalize text-base">
           <Home :size="22" />
           <span>Dashboard</span>
         </a>
