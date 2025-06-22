@@ -21,7 +21,7 @@
         <div class="text-xs text-gray-400 mt-4 mb-2 uppercase font-bold tracking-wider px-2">Features</div>
         
         <!-- Classroom -->
-        <a href="#" :class="getLinkClass('/admin/classroom')">
+        <a href="/admin/classroom" :class="getLinkClass('/admin/classroom')">
           <Book :size="20" />
           <span>Classroom</span>
         </a>
