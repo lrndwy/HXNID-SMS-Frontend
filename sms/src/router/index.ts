@@ -20,6 +20,21 @@ const routes: RouteRecordRaw[] = [
     path: '/admin/classroom',
     name: 'Classroom',
     component: () => import('../views/admin/Classroom.vue')
+  },
+  {
+    path: '/admin/attandance/staff',
+    name: 'Staff-Attandance',
+    component: () => import('../views/admin/attandance/Staff.vue')
+  },
+  {
+    path: '/admin/attandance/student',
+    name: 'Student-Attandance',
+    component: () => import('../views/admin/attandance/Student.vue')
+  },
+  {
+    path: '/admin/attandance/teacher',
+    name: 'Teacher-Attandance',
+    component: () => import('../views/admin/attandance/Teacher.vue')
   }
 ]
 

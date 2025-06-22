@@ -34,9 +34,9 @@
             <span class="ml-auto"> <component :is="open.attendance ? ChevronUp : ChevronDown" :size="18" /> </span>
           </div>
           <div v-if="open.attendance" class="ml-8 my-2 space-y-2 text-gray-600">
-            <a href="#" class="flex items-center gap-3 text-sm cursor-pointer hover:text-green-600 font-medium capitalize"><User :size="16" />Teacher</a>
-            <a href="#" class="flex items-center gap-3 text-sm cursor-pointer hover:text-green-600 font-medium capitalize"><UserCog :size="16" />Staff</a>
-            <a href="#" class="flex items-center gap-3 text-sm cursor-pointer hover:text-green-600 font-medium capitalize"><GraduationCap :size="16" />Student</a>
+            <a href="/admin/attandance/teacher" class="flex items-center gap-3 text-sm cursor-pointer hover:text-green-600 font-medium capitalize"><User :size="16" />Teacher</a>
+            <a href="/admin/attandance/staff" class="flex items-center gap-3 text-sm cursor-pointer hover:text-green-600 font-medium capitalize"><UserCog :size="16" />Staff</a>
+            <a href="/admin/attandance/student" class="flex items-center gap-3 text-sm cursor-pointer hover:text-green-600 font-medium capitalize"><GraduationCap :size="16" />Student</a>
           </div>
         </div>
         
