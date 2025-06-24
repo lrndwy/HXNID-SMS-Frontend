@@ -40,6 +40,11 @@ const routes: RouteRecordRaw[] = [
     path: '/admin/subject',
     name: 'admin-subject',
     component: () => import('../views/admin/subject/Subject.vue')
+  },
+  {
+    path: '/admin/subject/theme',
+    name: 'admin-subject-theme',
+    component: () => import('../views/admin/subject/Theme/Theme.vue')
   }
 ]
 
