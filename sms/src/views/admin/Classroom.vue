@@ -31,12 +31,12 @@
           <!-- Grid Card Kelas -->
           <div class="grid grid-cols-3 gap-6">
             <!-- Card Kelas -->
-            <div v-for="i in 3" :key="i" class="flex flex-row bg-white border rounded-xl shadow p-0 hover:shadow-lg transition">
-              <div class="w-1 bg-green-500 rounded-l-xl"></div>
+            <div v-for="classroom in classrooms" :key="classroom.name" @click="goToSubject(classroom.name)" class="flex flex-row bg-white border rounded-xl shadow p-0 hover:shadow-lg transition cursor-pointer">
+              <div :class="`w-1 bg-${classroom.color}-500 rounded-l-xl`"></div>
               <div class="flex-1 p-4 flex flex-col justify-between">
                 <div>
-                  <span class="text-green-600 font-bold text-lg">XII PPLG 1</span>
-                  <p class="text-xs text-gray-500 mt-1">there are : 25 students</p>
+                  <span :class="`text-${classroom.color}-600 font-bold text-lg`">{{ classroom.name }}</span>
+                  <p class="text-xs text-gray-500 mt-1">there are : {{ classroom.students }} students</p>
                 </div>
                 <div class="flex justify-end mt-2">
                   <span class="material-icons text-gray-400">arrow_forward_ios</span>
@@ -44,7 +44,7 @@
               </div>
             </div>
             <!-- Placeholder Card -->
-            <div v-for="i in 9" :key="'ph-' + i" class="bg-gray-200 rounded-xl h-24"></div>
+            <div v-for="i in (9 - classrooms.length)" :key="'ph-' + i" class="bg-gray-200 rounded-xl h-24 animate-pulse"></div>
           </div>
         </div>
       </main>
@@ -52,8 +52,24 @@
   </template>
   
   <script setup lang="ts">
-  import Sidebar from '../../components/admin/Sidebar.vue'
+  import { ref } from 'vue'
+  import { useRouter } from 'vue-router'
+  import Sidebar from '@/components/admin/Sidebar.vue'
+  import { useClassroomStore } from '@/stores/classroom'
   
+  const router = useRouter()
+  const classroomStore = useClassroomStore()
+  
+  const classrooms = ref([
+    { name: 'XII PPLG 1', students: 25, color: 'green' },
+    { name: 'XII PPLG 2', students: 28, color: 'blue' },
+    { name: 'XII PPLG 3', students: 26, color: 'red' },
+  ])
+
+  function goToSubject(name: string) {
+    classroomStore.setClassroom(name)
+    router.push('/admin/subject')
+  }
   
   </script>
 
