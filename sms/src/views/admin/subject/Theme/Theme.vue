@@ -173,6 +173,86 @@
             </div>
           </div>
         </div>
+
+        <!-- Pengaturan View -->
+        <div v-if="activeTab === 'pengaturan'" class="mt-8">
+          <h2 class="text-xl font-bold text-gray-800 mb-6">Pengaturan Mata Pelajaran</h2>
+          
+          <!-- Informasi Dasar -->
+          <div class="mb-8">
+            <h3 class="text-lg font-semibold text-gray-700 mb-4">Informasi Dasar</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label for="subjectName" class="block text-sm font-medium text-gray-600 mb-1">Nama Mata Pelajaran</label>
+                <input type="text" id="subjectName" :value="subject?.name" class="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500 bg-gray-50">
+              </div>
+              <div>
+                <label for="className" class="block text-sm font-medium text-gray-600 mb-1">Kelas</label>
+                <input type="text" id="className" value="Kelas 11" class="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500 bg-gray-50">
+              </div>
+              <div>
+                <label for="semester" class="block text-sm font-medium text-gray-600 mb-1">Semester</label>
+                <input type="text" id="semester" value="Semester Genap" class="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500 bg-gray-50">
+              </div>
+              <div>
+                <label for="teacherName" class="block text-sm font-medium text-gray-600 mb-1">Guru Pengajar</label>
+                <input type="text" id="teacherName" :value="subject?.teacher" class="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500 bg-gray-50">
+              </div>
+            </div>
+          </div>
+
+          <!-- Status -->
+          <div class="mb-8">
+            <h3 class="text-lg font-semibold text-gray-700 mb-2">Status</h3>
+            <div class="flex items-center justify-between bg-gray-50 p-4 rounded-lg border border-gray-200">
+              <div>
+                <h4 class="font-medium text-gray-800">Status Mata Pelajaran</h4>
+                <p class="text-sm text-gray-500">Aktifkan atau nonaktifkan mata pelajaran ini</p>
+              </div>
+              <label for="toggle-status" class="inline-flex relative items-center cursor-pointer">
+                <input type="checkbox" :checked="subject?.status === 'Aktif'" id="toggle-status" class="sr-only peer">
+                <div class="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 peer-checked:bg-blue-600"></div>
+                <div class="absolute left-1 top-1 bg-white border-gray-300 border rounded-full h-4 w-4 transition-all peer-checked:translate-x-full peer-checked:border-white"></div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Pengaturan Akses -->
+          <div class="mb-8">
+            <h3 class="text-lg font-semibold text-gray-700 mb-4">Pengaturan Akses</h3>
+            <div class="space-y-4">
+              <div v-for="permission in permissions" :key="permission.id" class="flex items-start">
+                <div class="flex items-center h-5">
+                  <input :id="permission.id" type="checkbox" :checked="permission.checked" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                </div>
+                <div class="ml-3 text-sm">
+                  <label :for="permission.id" class="font-medium text-gray-700">{{ permission.label }}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Zona Berbahaya -->
+          <div class="mb-8">
+             <h3 class="text-lg font-semibold text-red-600 mb-4">Zona Berbahaya</h3>
+             <div class="bg-red-50 border border-red-200 rounded-lg p-4 flex items-center justify-between">
+               <div>
+                 <h4 class="font-bold text-red-800">Hapus Mata Pelajaran</h4>
+                 <p class="text-sm text-red-700 mt-1">Tindakan ini tidak dapat dibatalkan. Semua data akan dihapus secara permanen.</p>
+               </div>
+               <button class="bg-white text-red-600 border border-red-600 hover:bg-red-600 hover:text-white font-bold py-2 px-4 rounded-lg text-sm">
+                 Hapus
+               </button>
+             </div>
+          </div>
+
+          <!-- Action Button -->
+          <div class="flex justify-end">
+            <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-6 rounded-lg">
+              Simpan Perubahan
+            </button>
+          </div>
+        </div>
       </div>
     </main>
   </div>
@@ -272,5 +352,12 @@ const assignments = ref([
     submissions: 18,
     status: 'Selesai'
   }
+])
+
+const permissions = ref([
+  { id: 'perm1', label: 'Siswa dapat melihat materi', checked: true },
+  { id: 'perm2', label: 'Siswa dapat mengunduh materi', checked: true },
+  { id: 'perm3', label: 'Siswa dapat memberikan komentar', checked: true },
+  { id: 'perm4', label: 'Siswa dapat mengumpulkan tugas terlambat', checked: false },
 ])
 </script>
