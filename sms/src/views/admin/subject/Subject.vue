@@ -64,7 +64,7 @@
 
           <!-- Subject Cards Grid -->
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div v-for="subject in subjects" :key="subject.name" class="bg-white rounded-2xl p-5 border border-gray-100 hover:shadow-lg transition-shadow duration-300">
+            <div v-for="subject in subjects" :key="subject.name" @click="goToTheme(subject)" class="bg-white rounded-2xl p-5 border border-gray-100 hover:shadow-lg transition-shadow duration-300 cursor-pointer">
               <div class="flex justify-between items-start">
                 <div class="flex items-center space-x-3">
                   <div :class="`bg-${subject.iconColor}-100 rounded-lg p-3 flex items-center justify-center`">
@@ -210,6 +210,7 @@
 import { ref, markRaw, h, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useClassroomStore } from '@/stores/classroom'
+import { useSubjectStore } from '@/stores/subject'
 import Sidebar from '@/components/admin/Sidebar.vue'
 import { BeakerIcon, GlobeAltIcon, AcademicCapIcon, ClockIcon } from '@heroicons/vue/24/outline'
 
@@ -217,6 +218,7 @@ const activeTab = ref('mataPelajaran') // 'mataPelajaran' or 'tugas'
 
 const router = useRouter()
 const classroomStore = useClassroomStore()
+const subjectStore = useSubjectStore()
 
 const classroomName = computed(() => classroomStore.currentClassroomName)
 
@@ -225,6 +227,11 @@ onMounted(() => {
     router.push('/admin/classroom')
   }
 })
+
+function goToTheme(subject) {
+  subjectStore.setSubject(subject)
+  router.push({ name: 'admin-subject-theme' })
+}
 
 // These classes are dynamically generated, so we need to include them here
 // to make sure Tailwind's JIT compiler picks them up.
