@@ -12,10 +12,16 @@ COPY . .
 RUN npm run build
 
 # Stage 2: Serve the application with a lightweight web server
-FROM nginx:stable-alpine
+FROM node:20-alpine
 
-COPY --from=build-stage /app/dist /usr/share/nginx/html
+WORKDIR /app
 
-EXPOSE 80
+# Install serve globally
+RUN npm install -g serve
 
-CMD ["nginx", "-g", "daemon off;"]
+# Copy the built application from the build-stage
+COPY --from=build-stage /app/dist ./dist
+
+EXPOSE 3000
+
+CMD ["serve", "-s", "dist"]
