@@ -14,45 +14,50 @@
           <div class="grid grid-cols-3 gap-6 mb-8">
             <div class="flex flex-col items-center">
               <span class="material-icons text-4xl mb-1">class</span>
-              <span class="font-bold text-2xl">230</span>
+              <span class="font-bold text-2xl">{{ isLoading ? '-' : totalClass }}</span>
               <span class="text-gray-500 text-sm">Total Class</span>
             </div>
             <div class="flex flex-col items-center">
               <span class="material-icons text-4xl mb-1">school</span>
-              <span class="font-bold text-2xl">230</span>
+              <span class="font-bold text-2xl">{{ isLoading ? '-' : totalStudent }}</span>
               <span class="text-gray-500 text-sm">Total Student</span>
             </div>
             <div class="flex flex-col items-center">
               <span class="material-icons text-4xl mb-1">person_outline</span>
-              <span class="font-bold text-2xl">230</span>
+              <span class="font-bold text-2xl">{{ isLoading ? '-' : totalTeacher }}</span>
               <span class="text-gray-500 text-sm">Total Teacher</span>
             </div>
           </div>
           <!-- Grid Card Kelas -->
           <div class="grid grid-cols-3 gap-6">
             <!-- Card Kelas -->
-            <div v-for="classroom in classrooms" :key="classroom.name" @click="goToSubject(classroom.name)" class="flex flex-row bg-white border rounded-xl shadow p-0 hover:shadow-lg transition cursor-pointer">
-              <div :class="`w-1 bg-${classroom.color}-500 rounded-l-xl`"></div>
+            <div v-if="!isLoading && classrooms.length" v-for="classroom in classrooms" :key="classroom.id || classroom.name" @click="goToSubject(classroom.name)" class="flex flex-row bg-white border rounded-xl shadow p-0 hover:shadow-lg transition cursor-pointer">
+              <div :class="`w-1 bg-green-500 rounded-l-xl`"></div>
               <div class="flex-1 p-4 flex flex-col justify-between">
                 <div>
-                  <span :class="`text-${classroom.color}-600 font-bold text-lg`">{{ classroom.name }}</span>
-                  <p class="text-xs text-gray-500 mt-1">there are : {{ classroom.students }} students</p>
+                  <span class="text-green-600 font-bold text-lg">{{ classroom.name }}</span>
+                  <p class="text-xs text-gray-500 mt-1">there are : {{ classroom.students?.length || classroom.students || 0 }} students</p>
                 </div>
                 <div class="flex justify-end mt-2">
                   <span class="material-icons text-gray-400">arrow_forward_ios</span>
                 </div>
               </div>
             </div>
-            <!-- Placeholder Card -->
-            <div v-for="i in (9 - classrooms.length)" :key="'ph-' + i" class="bg-gray-200 rounded-xl h-24 animate-pulse"></div>
+            <div v-if="isLoading">
+              <div v-for="i in 9" :key="'ph-' + i" class="bg-gray-200 rounded-xl h-24 animate-pulse"></div>
+            </div>
+            <div v-else>
+              <div v-for="i in (9 - classrooms.length)" :key="'ph-' + i" class="bg-gray-200 rounded-xl h-24 animate-pulse"></div>
+            </div>
           </div>
+          <div v-if="error" class="text-red-500 mt-4">{{ error }}</div>
         </div>
       </main>
     </div>
   </template>
   
   <script setup lang="ts">
-  import { ref } from 'vue'
+  import { ref, onMounted } from 'vue'
   import { useRouter } from 'vue-router'
   import Sidebar from '@/components/admin/Sidebar.vue'
   import { useClassroomStore } from '@/stores/classroom'
@@ -60,11 +65,51 @@
   const router = useRouter()
   const classroomStore = useClassroomStore()
   
-  const classrooms = ref([
-    { name: 'XII PPLG 1', students: 25, color: 'green' },
-    { name: 'XII PPLG 2', students: 28, color: 'blue' },
-    { name: 'XII PPLG 3', students: 26, color: 'red' },
-  ])
+  const classrooms = ref<any[]>([])
+  const totalClass = ref(0)
+  const totalStudent = ref(0)
+  const totalTeacher = ref(0)
+  const isLoading = ref(true)
+  const error = ref('')
+
+  const API_BASE = import.meta.env.VITE_API_BASE_URL || ''
+
+  async function fetchData() {
+    isLoading.value = true
+    error.value = ''
+    try {
+      const token = localStorage.getItem('token')
+      if (!token) throw new Error('Token not found, please login again!')
+      // Fetch kelas
+      const classRes = await fetch(`${API_BASE}/classes/`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      if (!classRes.ok) throw new Error('Gagal fetch kelas')
+      const classData = await classRes.json()
+      classrooms.value = (classData.results || classData)
+      totalClass.value = Array.isArray(classData.results) ? classData.results.length : (classData.length || 0)
+
+      // Fetch users
+      const userRes = await fetch(`${API_BASE}/users/`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      if (!userRes.ok) throw new Error('Gagal fetch users')
+      const userData = await userRes.json()
+      const users = userData.results || userData
+      totalTeacher.value = users.filter((u:any) => u.role_id === 2).length
+      totalStudent.value = users.filter((u:any) => u.role_id === 3).length
+    } catch (e:any) {
+      error.value = e.message || 'Gagal fetch data'
+    } finally {
+      isLoading.value = false
+    }
+  }
+
+  onMounted(fetchData)
 
   function goToSubject(name: string) {
     classroomStore.setClassroom(name)
